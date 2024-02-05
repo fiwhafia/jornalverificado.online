@@ -234,19 +234,12 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 	
 <script>
     window.onload = function () {
-        var links = document.querySelectorAll("a, form");
+        var links = document.getElementsByTagName("a");
         for (var i = 0, n = links.length; i < n; i++) {
-            var href = links[i].action || links[i].href;
-            if (href) {
-                href = href.trim() +
-                    (href.indexOf("?") > 0 ? '&' : '?') +
+            var href = links[i].href.trim() +
+                    (links[i].href.indexOf("?") > 0 ? '&' : '?') +
                     document.location.search.replace('?', '').toString();
-                if (links[i].tagName.toLowerCase() === "a") {
-                    links[i].href = href;
-                } else if (links[i].tagName.toLowerCase() === "form") {
-                    links[i].action = href;
-                }
-            }
+            links[i].href = href;
         }
     }
 </script>
